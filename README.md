@@ -36,12 +36,9 @@ poetry install
 ### 3. Run the API Server
 
 ```bash
-poetry run uvicorn electrolyzer.main:app --host 0.0.0.0 --port 8000
+poetry run uvicorn electrolyzer.main:app
 ```
 
-### 4. Open the Web Interface
-
-Visit: [http://localhost:8000](http://localhost:8000)
 
 ---
 
