@@ -4,9 +4,15 @@ MEMBRANE_PARAMETERS = {
     "Nafion117": {},  # Placeholder for parameters
 }
 
+CATALYST_PARAMETERS = {"Combination1": {}, "Combination2": {}}
+
 
 def membrane_equation(membrane: str, params: dict) -> dict:
     # Placeholder for membrane-related calculations
+    return {}
+
+
+def catalyst_equation(catalyst: str, params: dict) -> dict:
     return {}
 
 

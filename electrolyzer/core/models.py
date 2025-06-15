@@ -5,6 +5,10 @@ class MembraneRequest(BaseModel):
     membrane: str  # e.g., Nafion 115, Nafion 117
 
 
+class CatalystRequest(BaseModel):
+    catalyst: str
+
+
 class TemperatureResponse(BaseModel):
     temperature: float  # Placeholder for computed temperature
     message: str  # Optional message or status
