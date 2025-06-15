@@ -1,0 +1,43 @@
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ElectrolyzerAPI - Scientific Control Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+  <script defer src="/static/js/frontend.js"></script>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen flex">
+  <aside class="w-1/5 bg-white shadow-lg p-6 flex flex-col">
+    <h1 class="text-2xl font-bold mb-8">ElectrolyzerAPI</h1>
+    <nav class="flex flex-col space-y-4">
+      <button id="btn-compile" class="py-2 px-4 rounded hover:bg-blue-500 hover:text-white transition" aria-pressed="true">Compile</button>
+      <button id="btn-evaluate" class="py-2 px-4 rounded hover:bg-blue-500 hover:text-white transition" aria-pressed="false">Evaluate</button>
+    </nav>
+  </aside>
+
+  <main class="w-4/5 p-8 overflow-auto">
+    <section id="panel-compile" class="block">
+      <h2 class="text-3xl font-semibold mb-4">Membrane Selection</h2>
+      <p class="mb-6 text-gray-700">Select the membrane type (e.g., Nafion 115, Nafion 117).</p>
+      <select id="membrane-select" class="border border-gray-300 rounded p-2 w-64 mb-4">
+        <option>Nafion 115</option>
+        <option>Nafion 117</option>
+        <option>Nafion 212</option>
+      </select>
+      <button id="compile-submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Submit</button>
+      <p id="compile-response" class="mt-4 text-green-600"></p>
+    </section>
+
+    <section id="panel-evaluate" class="hidden">
+      <h2 class="text-3xl font-semibold mb-4">Operating Temperature</h2>
+      <p class="mb-6 text-gray-700">Compute the optimal operating temperature based on input parameters.</p>
+      <label for="current-density" class="block mb-1 font-medium">Current Density (A/cm²):</label>
+      <input type="number" id="current-density" class="border border-gray-300 rounded p-2 w-32 mb-4" min="0" step="0.1" value="1.0" />
+      <button id="evaluate-submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Calculate</button>
+      <p id="evaluate-response" class="mt-4 text-green-600"></p>
+    </section>
+  </main>
+</body>
+</html>
