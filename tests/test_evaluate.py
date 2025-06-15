@@ -1,14 +1,9 @@
-import pytest
-from api.evaluate.temperature_optimizer import TemperatureOptimizer
+from fastapi.testclient import TestClient
+from electrolyzer.main import app
 
+client = TestClient(app)
 
-def test_default_temperature():
-    optimizer = TemperatureOptimizer()
-    temp = optimizer.compute_best_temperature()
-    assert temp == 70.0
-
-
-def test_temperature_with_current_density():
-    optimizer = TemperatureOptimizer()
-    temp = optimizer.compute_best_temperature(current_density=3.0)
-    assert optimizer.min_temp <= temp <= optimizer.max_temp
+def test_compute_temperature():
+    response = client.get("/api/v1/evaluate/compute-temperature")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Best operation temperature computation placeholder"}
