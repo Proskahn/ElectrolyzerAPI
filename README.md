@@ -41,9 +41,6 @@ poetry run uvicorn webapp.main:app --reload
 
 Or use the shortcut:
 
-```bash
-./run_server.sh
-```
 
 ### 4. Open the Web Interface
 
