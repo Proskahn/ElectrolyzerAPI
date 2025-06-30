@@ -1,5 +1,6 @@
-from .condition import Condition
+from ..Config.condition import Condition
 import casadi as ca
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class Membrane(Condition):

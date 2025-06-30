@@ -6,7 +6,7 @@
 
 ## 🚀 Features
 
-- 🔧 **Compile tools**: Select key components like membranes (e.g., Nafion 115/117)
+- 🔧 **Compile tools**: Select key service like membranes (e.g., Nafion 115/117)
 - 📊 **Evaluate tools**: Compute optimal operating temperatures based on inputs
 - 💡 Built with **FastAPI** + **Jinja2** for high-performance APIs and easy templating
 - 💻 Responsive Web Interface using **Tailwind CSS**

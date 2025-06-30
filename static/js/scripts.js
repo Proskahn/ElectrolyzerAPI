@@ -1,47 +1,108 @@
-async function chooseMembrane() {
-    const responseDiv = document.getElementById('response');
-    const membrane = prompt('Enter membrane (e.g., Nafion115, Nafion117):', 'Nafion115');
-    if (!membrane) return;
+async function configureElectrolyzer() {
+    const form = document.getElementById("configureForm");
+    const formData = new FormData(form);
+    const data = {};
+
+    formData.forEach((value, key) => {
+        data[key] = parseFloat(value);
+    });
+
     try {
-        const response = await fetch('/api/v1/compile/choose-membrane', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ membrane })
+        const response = await fetch("/compile/configure_electrolyzer", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
         });
-        if (!response.ok) throw new Error(`HTTP ${response.status}: ${await response.text()}`);
-        const data = await response.json();
-        responseDiv.innerText = JSON.stringify(data, null, 2);
+
+        const result = await response.json();
+        displayResponse(result);
     } catch (error) {
-        responseDiv.innerText = 'Error: ' + error.message;
+        displayResponse({ error: "Configuration failed: " + error });
     }
 }
 
-async function chooseCatalyst() {
-    const responseDiv = document.getElementById('response');
-    const catalyst = prompt('Enter catalyst (e.g., Platinum, Iridium):', 'Combination1');
-    if (!catalyst) return;
+async function computeOpenCircuitVoltage() {
+    const temperature = parseFloat(document.getElementById("ocv_temperature").value);
+    const data = {
+        temperature: temperature,
+        waterflow: 1.0,
+        pressure: 1.0,
+        R_membrane: 0.1,
+        i0_anode: 0.0001,
+        i0_cathode: 0.0001,
+        alpha_anode: 0.5,
+        alpha_cathode: 0.5,
+        A: 0.01,
+        GDL_thickness: 0.0001,
+        channel_width: 0.001,
+        channel_depth: 0.001
+    };
+
     try {
-        const response = await fetch('/api/v1/compile/choose-catalyst', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ catalyst })
+        const response = await fetch("/evaluate/compute-open-circuit-voltage", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
         });
-        if (!response.ok) throw new Error(`HTTP ${response.status}: ${await response.text()}`);
-        const data = await response.json();
-        responseDiv.innerText = JSON.stringify(data, null, 2);
+
+        const result = await response.json();
+        displayResponse(result);
     } catch (error) {
-        responseDiv.innerText = 'Error: ' + error.message;
+        displayResponse({ error: "OCV computation failed: " + error });
     }
 }
 
-async function computeTemperature() {
-    const responseDiv = document.getElementById('response');
+async function computeOhmPotential() {
+    const R_membrane = parseFloat(document.getElementById("ohm_r_membrane").value);
+    const data = {
+        temperature: 298.15,
+        waterflow: 1.0,
+        pressure: 1.0,
+        R_membrane: R_membrane,
+        i0_anode: 0.0001,
+        i0_cathode: 0.0001,
+        alpha_anode: 0.5,
+        alpha_cathode: 0.5,
+        A: 0.01,
+        GDL_thickness: 0.0001,
+        channel_width: 0.001,
+        channel_depth: 0.001
+    };
+
     try {
-        const response = await fetch('/api/v1/evaluate/compute-temperature');
-        if (!response.ok) throw new Error(`HTTP ${response.status}: ${await response.text()}`);
-        const data = await response.json();
-        responseDiv.innerText = JSON.stringify(data, null, 2);
+        const response = await fetch("/evaluate/compute-ohm-potential", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        displayResponse(result);
     } catch (error) {
-        responseDiv.innerText = 'Error: ' + error.message;
+        displayResponse({ error: "Ohmic potential computation failed: " + error });
     }
+}
+
+async function predictLife() {
+    try {
+        const response = await fetch("/evaluate/life-prediction", {
+            method: "POST"
+        });
+
+        const result = await response.json();
+        displayResponse(result);
+    } catch (error) {
+        displayResponse({ error: "Life prediction failed: " + error });
+    }
+}
+
+function displayResponse(result) {
+    const output = document.getElementById("response");
+    output.textContent = JSON.stringify(result, null, 2);
 }
